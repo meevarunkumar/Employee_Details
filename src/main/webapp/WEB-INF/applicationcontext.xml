@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/employee_management_system"/>
+        <property name="username" value="root"/>
+        <property name="password" value="12111998"/>
+    </bean>
+
+
+    <bean class="org.springframework.jdbc.core.JdbcTemplate" id="jdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <!--This bean is for EmployeeDaoImp class-->
+    <bean class="com.ems.dao.impl.EmployeeDaoImp" id="daoImp">
+        <constructor-arg name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <!--This bean is for EmployeeServiceImp class-->
+    <bean class="com.ems.service.impl.EmployeeServiceImpl" id="employeeService">
+        <property name="daoImp" ref="daoImp"/>
+    </bean>
+
+
+    <bean class="org.springframework.web.client.RestTemplate" id="restTemplate">
+
+    </bean>
+
+</beans>
